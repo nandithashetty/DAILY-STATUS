@@ -1,0 +1,215 @@
+# 1st program (count)
+
+import java.util.Scanner;
+ public class Main
+{
+   public static void main(String args[])
+   {
+        int i;
+        String str;
+        int counter[] = new int[256];
+        Scanner in = new Scanner(System.in);
+        System.out.print("Enter a String : ");
+        str=in.nextLine();
+        for (i = 0; i < str.length(); i++) {
+            counter[(int) str.charAt(i)]++;
+        }
+        // Print Frequency of characters
+        for (i = 0; i < 256; i++) {
+            if (counter[i] != 0) {
+                  System.out.println( (char) i  + ":" +counter[i]);
+            }
+        }
+   }
+}
+
+
+#2nd program(Ping pong)
+
+class OddThread extends Thread
+{
+int limit;
+sharedPrinter printer;
+public OddThread(int limit, sharedPrinter printer)
+{
+this.limit = limit;
+this.printer = printer;
+}
+@Override
+public void run() 
+{
+int oddNumber = 1;      
+while (oddNumber <= limit)
+{
+printer.printOdd(oddNumber);       
+oddNumber = oddNumber + 2;         
+}
+}
+}
+
+class EvenThread extends Thread
+{
+int limit;
+sharedPrinter printer;
+public EvenThread(int limit, sharedPrinter printer)
+{
+this.limit = limit;
+this.printer = printer;
+}
+@Override
+public void run() 
+{
+int evenNumber = 2;           
+while (evenNumber <= limit)
+{
+printer.printEven(evenNumber);         
+evenNumber = evenNumber + 2;          
+}
+}
+}
+class sharedPrinter
+{
+
+boolean isOddPrinted = false;
+
+
+synchronized void printOdd(int number)
+{
+while (isOddPrinted)
+{
+try 
+{
+wait();
+} 
+catch (InterruptedException e)
+{
+e.printStackTrace();
+}
+}
+System.out.println(Thread.currentThread().getName()+" "+number);
+isOddPrinted = true;
+try 
+{
+Thread.sleep(1000);
+} 
+catch (InterruptedException e) 
+{
+e.printStackTrace();
+}
+notify();
+}
+
+synchronized void printEven(int number)
+{
+while (! isOddPrinted)
+{
+try 
+{
+wait();
+}
+catch (InterruptedException e) 
+{
+e.printStackTrace();
+}
+}
+System.out.println(Thread.currentThread().getName()+" "+number);
+isOddPrinted = false;
+try 
+{
+Thread.sleep(1000);
+} 
+catch (InterruptedException e) 
+{
+e.printStackTrace();
+}
+notify();
+}
+}
+public class Main 
+{
+public static void main(String[] args) 
+{
+sharedPrinter printer = new sharedPrinter();
+OddThread oddThread = new OddThread(20, printer);
+oddThread.setName("—-pong");
+EvenThread evenThread = new EvenThread(20, printer);
+evenThread.setName("ping — >");
+oddThread.start();
+evenThread.start();
+}
+}
+
+3rd program:
+
+#include <stdio.h> 
+bool find3Numbers(int A[], int arr_size, int sum) 
+{ 
+    int l, r; 
+int t;
+for int(t=0;t<l;t++)
+{
+    for (int i = 0; i < arr_size - 2; i++) { 
+        for (int j = i + 1; j < arr_size - 1; j++) { 
+            for (int k = j + 1; k < arr_size; k++) { 
+                if (A[i] + A[j] + A[k] == sum) { 
+                    printf("%d, %d, %d", 
+                           A[i], A[j], A[k]); 
+                    return true; 
+                } 
+            } 
+        } 
+    } 
+
+    return false; 
+} 
+int main() 
+{ 
+    int A[50];
+    scanf("%d",A[i]);
+    int sum;
+    int arr_size = sizeof(A) / sizeof(A[0]); 
+    find3Numbers(A, arr_size, sum); 
+    return 0; 
+} 
+
+
+
+4th program:
+
+#include <stdio.h>
+int check_anagram(char [], char []);
+int main()
+{
+    char a[100], b[100];
+    printf("Enter two strings : \n");
+    gets(a);
+    gets(b);
+
+    if (check_anagram(a, b) == 1)
+        printf("%s and %s strings are anagrams\n",a,b);
+    else
+        printf("%s and %s strings are not anagrams\n");
+
+    return 0;
+}
+int check_anagram(char a[], char b[])
+{
+    int first[26] = {0}, second[26] = {0}, c=0;
+    while (a[c] != '\0')
+    {
+        first[a[c]-'a']++;
+        c++;
+    }
+    c = 0;
+    while (b[c] != '\0')
+    {
+        second[b[c]-'a']++;
+        c++;
+    }
+    for (c = 0; c < 26; c++)
+    {
+        if (first[c] != second[c])
+            return 0;
+    }
+    return 1;
+}
