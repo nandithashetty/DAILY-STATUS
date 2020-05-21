@@ -1,0 +1,24 @@
+1.Getting a message printed through Applet
+
+
+import java.awt.*;
+import java.applet.*;
+public class AppletDemo
+{
+      public void paint(Graphics g)
+      {
+           g.drawString("Welcome to TutorialRide", 50, 50);
+      }
+}
+
+//AppletDemo.html
+
+<html>
+      <head>
+            <title> AppletDemo </title>
+      </head>
+      <body>
+            <applet code="AppletDemo.class" width="200" height="250">
+            </applet>
+      </body>
+</html>

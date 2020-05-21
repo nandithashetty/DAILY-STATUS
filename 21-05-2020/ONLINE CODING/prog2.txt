@@ -1,0 +1,10 @@
+2. <title> AppletDemo </title>
+
+
+import java.applet.*;
+import java.awt.*;
+       public class Simple extends Applet {
+   public void paint (Graphics g) {
+      g.drawString ("	A Simple Applet", 20, 20);
+   }
+}
